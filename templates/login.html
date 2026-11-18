@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Demo login - Signal to Support{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>Demo login (optional)</h1>
+  <p>Username <code>demo</code>, password <code>demo123</code>. Judges can skip this and use Continue as Guest from the home page.</p>
+  <form method="post" action="{{ url_for('login') }}" class="form">
+    <div class="field">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required>
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+    </div>
+    <button class="button primary" type="submit">Sign in</button>
+  </form>
+  <form method="post" action="{{ url_for('guest') }}">
+    <button class="button secondary" type="submit">Continue as Guest instead</button>
+  </form>
+</section>
+{% endblock %}

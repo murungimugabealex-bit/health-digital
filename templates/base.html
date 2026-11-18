@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Signal to Support{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="{{ url_for('index') }}">Signal to Support</a>
+    <nav>
+      <a href="{{ url_for('assess') }}">New assessment</a>
+      <a href="{{ url_for('history') }}">History</a>
+      {% if signed_in_user %}
+        <span class="chip">Demo user: {{ signed_in_user }}</span>
+        <a href="{{ url_for('logout') }}">Sign out</a>
+      {% elif guest_mode %}
+        <span class="chip chip-guest">Guest mode: all features on</span>
+      {% else %}
+        <span class="chip">Not signed in</span>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main class="wrap">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="flash">
+          {% for message in messages %}<p>{{ message }}</p>{% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <p>{{ safety_note }} Demo only. Synthetic data only. No real patient data.</p>
+  </footer>
+</body>
+</html>

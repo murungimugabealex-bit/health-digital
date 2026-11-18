@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Signal to Support - Future Health Digital Innovation Challenge{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="eyebrow">From signals to solutions</p>
+  <h1>Turn symptoms and vital signs into a clear next step.</h1>
+  <p class="lead">A community health worker enters a few simple signals. The app gives a risk level, a short reason, and a recommended action in plain English.</p>
+  <div class="actions">
+    <form method="post" action="{{ url_for('guest') }}">
+      <button class="button primary" type="submit">Continue as Guest</button>
+    </form>
+    <a class="button secondary" href="{{ url_for('login') }}">Use demo login</a>
+  </div>
+  <p class="small">Guest access opens every feature. No real patient data is used anywhere in this demo.</p>
+</section>
+
+<section class="grid">
+  <article class="card">
+    <h2>1. Enter signals</h2>
+    <p>Age, symptoms, and six vital signs. A sample button fills the form for you.</p>
+  </article>
+  <article class="card">
+    <h2>2. See a result</h2>
+    <p>Low, Medium, or High risk, with the reasons shown as short sentences.</p>
+  </article>
+  <article class="card">
+    <h2>3. Get a next step</h2>
+    <p>Self-care, contact a clinic, or seek urgent care today.</p>
+  </article>
+  <article class="card">
+    <h2>4. Review history</h2>
+    <p>Saved demo assessments can be opened again from the history table.</p>
+  </article>
+</section>
+
+<section class="notice">
+  <strong>Safety:</strong> {{ safety_note }} This is a challenge prototype, not a medical device.
+</section>
+{% endblock %}

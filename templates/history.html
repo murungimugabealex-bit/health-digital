@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}History - Signal to Support{% endblock %}
+{% block content %}
+<h1>Assessment history</h1>
+<p class="lead">Last 20 saved demo assessments. All entries use synthetic codes.</p>
+<div class="card table-wrap">
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Patient code</th><th>Time (UTC)</th><th>Risk</th><th></th></tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+        <tr>
+          <td>{{ record.id }}</td>
+          <td>{{ record.patient_code }}</td>
+          <td>{{ record.created_at }}</td>
+          <td><span class="tag risk-{{ record.risk|lower }}">{{ record.risk }}</span></td>
+          <td><a href="{{ url_for('result', record_id=record.id) }}">Open</a></td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5">No assessments yet. <a href="{{ url_for('assess') }}">Create one.</a></td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<p class="small">{{ safety_note }}</p>
+{% endblock %}

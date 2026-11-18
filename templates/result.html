@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Result - Signal to Support{% endblock %}
+{% block content %}
+<section class="result-head">
+  <p class="eyebrow">Assessment result</p>
+  <h1>{{ record.patient_code }}</h1>
+  <p class="small">Recorded {{ record.created_at }}</p>
+</section>
+
+<section class="card result-card risk-{{ record.risk|lower }}">
+  <div class="badge">{{ record.risk|upper }} RISK</div>
+  <h2>Recommended next step</h2>
+  <p class="recommendation">{{ record.recommendation }}</p>
+  <h2>Why this result</h2>
+  <ul>
+    {% for reason in record.reasons %}<li>{{ reason }}</li>{% endfor %}
+  </ul>
+  <p class="small">{{ record.safety_note }}</p>
+</section>
+
+<div class="actions">
+  <a class="button primary" href="{{ url_for('assess') }}">New assessment</a>
+  <a class="button secondary" href="{{ url_for('history') }}">View history</a>
+</div>
+{% endblock %}
