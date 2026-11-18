@@ -238,7 +238,8 @@ Optional evidence for the demo:
 
 - Screenshots: [CHECK: add home page, guest mode, sample case loaded, High risk
   result, and history page].
-- Demo link: [CHECK: add link only if you host it safely; the current build runs
-  locally with `python app.py`].
+- Demo link: [CHECK: add the Cloudflare Pages URL after deployment. The static
+  Pages version is in `web/` and keeps all guest features. The Flask version also
+  runs locally with `python app.py`.].
 - Automated check output: `Ran 10 tests ... OK` from
   `python -m unittest discover -s tests -v`.

@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal to Support - live demo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">Signal to Support</a>
+    <nav>
+      <a href="#assess-form" data-requires-access>New assessment</a>
+      <a href="#history-section" data-requires-access>History</a>
+      <span id="status-chip" class="chip">Not signed in</span>
+      <button id="sign-out" class="link-button" hidden>Sign out</button>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div id="flash" class="flash" hidden></div>
+
+    <section id="home" class="hero">
+      <p class="eyebrow">From signals to solutions</p>
+      <h1>Turn symptoms and vital signs into a clear next step.</h1>
+      <p class="lead">Enter a few signals and get a Low, Medium, or High risk hint with a short reason and a recommended action in plain English.</p>
+      <div class="actions">
+        <button id="guest-button" class="button primary" type="button">Continue as Guest</button>
+        <a class="button secondary" href="#demo-login">Use demo login</a>
+      </div>
+      <p class="small">Guest access opens every feature. No real patient data is used anywhere in this demo.</p>
+    </section>
+
+    <section id="app">
+      <div class="card narrow" id="demo-login-card">
+        <h2>Demo login (optional)</h2>
+        <p class="small">Username <code>demo</code>, password <code>demo123</code>. You can skip this and use Continue as Guest.</p>
+        <form id="demo-login" class="form">
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required>
+          </div>
+          <button class="button secondary" type="submit">Sign in</button>
+          <button id="guest-button-2" class="button primary" type="button">Continue as Guest instead</button>
+        </form>
+      </div>
+
+      <div class="card sample-bar">
+        <label for="sample_select">Load a synthetic sample case</label>
+        <div class="row">
+          <select id="sample_select"></select>
+          <button class="button small-button" id="load_sample" type="button">Fill form</button>
+        </div>
+      </div>
+
+      <form id="assess-form" class="card form">
+        <div class="field">
+          <label for="patient_code">Patient code (synthetic)</label>
+          <input id="patient_code" name="patient_code" placeholder="SYN-004">
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="age">Age (years)</label>
+            <input id="age" name="age" type="number" min="0" max="120" required>
+          </div>
+          <div class="field">
+            <label for="duration_days">Days since symptoms started</label>
+            <input id="duration_days" name="duration_days" type="number" min="0" max="60" required>
+          </div>
+          <div class="field">
+            <label for="temperature_c">Temperature (C)</label>
+            <input id="temperature_c" name="temperature_c" type="number" step="0.1" min="30" max="45" required>
+          </div>
+          <div class="field">
+            <label for="heart_rate">Heart rate (bpm)</label>
+            <input id="heart_rate" name="heart_rate" type="number" min="20" max="250" required>
+          </div>
+          <div class="field">
+            <label for="respiratory_rate">Breathing rate (per minute)</label>
+            <input id="respiratory_rate" name="respiratory_rate" type="number" min="4" max="60" required>
+          </div>
+          <div class="field">
+            <label for="systolic_bp">Systolic blood pressure (mmHg)</label>
+            <input id="systolic_bp" name="systolic_bp" type="number" min="50" max="250" required>
+          </div>
+          <div class="field">
+            <label for="spo2">Oxygen saturation, SpO2 (%)</label>
+            <input id="spo2" name="spo2" type="number" min="0" max="100" required>
+          </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>Symptoms</legend>
+          <div class="checks">
+            <label class="check"><input type="checkbox" name="symptoms" value="fever"> Fever</label>
+            <label class="check"><input type="checkbox" name="symptoms" value="cough"> Cough</label>
+            <label class="check"><input type="checkbox" name="symptoms" value="shortness_of_breath"> Shortness of breath</label>
+            <label class="check"><input type="checkbox" name="symptoms" value="chest_pain"> Chest pain</label>
+            <label class="check"><input type="checkbox" name="symptoms" value="weakness"> Weakness</label>
+            <label class="check"><input type="checkbox" name="symptoms" value="confusion"> Confusion</label>
+          </div>
+        </fieldset>
+
+        <button class="button primary" type="submit">Get risk result</button>
+      </form>
+
+      <section id="result-section" class="card result-card" hidden>
+        <p class="eyebrow">Assessment result</p>
+        <h2 id="result-code"></h2>
+        <p class="small" id="result-time"></p>
+        <div id="risk-badge" class="badge"></div>
+        <h3>Recommended next step</h3>
+        <p class="recommendation" id="risk-recommendation"></p>
+        <p class="small" id="risk-signal"></p>
+        <h3>Why this result</h3>
+        <ul id="risk-reasons"></ul>
+        <p class="small">This tool gives a simple triage hint only. It is not a diagnosis. A doctor or nurse makes the final decision.</p>
+      </section>
+
+      <section id="history-section">
+        <h2>Assessment history</h2>
+        <p class="lead">Last 20 saved demo assessments, stored in this browser only.</p>
+        <div class="card table-wrap">
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Patient code</th><th>Time (UTC)</th><th>Risk</th><th></th></tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="notice">
+      <strong>Safety:</strong> This is a challenge prototype, not a medical device. A doctor or nurse makes the final decision.
+      Demo only. Synthetic data only. No real patient data.
+    </section>
+  </main>
+
+  <footer class="footer">Source: https://github.com/murungimugabealex-bit/health-digital</footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

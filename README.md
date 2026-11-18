@@ -44,6 +44,12 @@ health digital/
     health_digital.db        Created automatically on first run (SQLite)
   README.md                  This file
   REPORT.md                  Slide-ready submission text
+  web/                       Static Cloudflare Pages version (same features)
+    index.html               Single-page demo with guest access
+    app.js                   Form, results, history (localStorage)
+    rules.js                 Same transparent risk rules in JavaScript
+    style.css                Shared styling
+  wrangler.toml              Cloudflare Pages project config
 ```
 
 ## Run instructions
@@ -90,3 +96,23 @@ Expected result: `Ran 10 tests ... OK`.
 - Do not enter real patient data. The demo stores entries locally in
   `data/health_digital.db` with no encryption and no access control.
 - Delete `data/health_digital.db` to reset the demo.
+
+## Cloudflare Pages deployment (static version)
+
+The Flask app above cannot run on Cloudflare Pages. The `web/` folder is a
+static version with the same guest access, form, sample cases, risk result, and
+history (stored in the visitor's browser only). It needs no server.
+
+One-time setup from this folder:
+
+```powershell
+npm install -g wrangler
+npx wrangler login
+npx wrangler pages deploy web --project-name health-digital
+```
+
+Wrangler prints a permanent `https://health-digital-<hash>.pages.dev` URL.
+Alternatively, connect the GitHub repository to a new Cloudflare Pages project,
+set the build output directory to `web`, and no build command is needed.
+
+[CHECK: paste the final Pages URL into the REPORT.md "Additional Slide".]
